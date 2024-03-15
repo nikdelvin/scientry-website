@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro'
+import tailyUI from 'taily-ui'
+---
+
+<Layout
+    title="Welcome to Scientry"
+    description="Self-hosted, all-in-one Data Management & Visualization solution for scientific researchers."
+>
+    <main class="select-none overflow-hidden">
+        <fragment
+            set:html={tailyUI.OpenSourcePromo({
+                logo: '/favicon.svg',
+                title: 'Scientry',
+                color: 'primary',
+                text: [
+                    { type: 'default', value: 'Build' },
+                    { type: 'primary', value: 'beautiful' },
+                    {
+                        type: 'default',
+                        value: 'dashboards with compact, easy to use and fully customizable CMS for'
+                    },
+                    { type: 'secondary', value: 'Data Management' }
+                ],
+                description:
+                    'Self-hosted, all-in-one Data Management & Visualization solution for scientific researchers.',
+                button: {
+                    title: 'Research more',
+                    link: '/'
+                },
+                github: 'https://github.com/nikdelvin/scientry',
+                images: ['/main-1.png', '/main-2.png', '/main-3.png']
+            })}
+        />
+    </main>
+</Layout>

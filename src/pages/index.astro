@@ -26,9 +26,26 @@ import tailyUI from 'taily-ui'
                     'Self-hosted, all-in-one Data Management & Visualization solution for scientific researchers.',
                 button: {
                     title: 'Research more',
-                    link: '/'
+                    link: '#kpi'
                 },
                 github: 'https://github.com/nikdelvin/scientry'
+            })}
+        />
+        <fragment
+            id="kpi"
+            set:html={tailyUI.KPICards({
+                title: `Under the hood`,
+                color: 'primary',
+                cards: [
+                    { title: 'Fast', description1: 'relative', description2: 'database' },
+                    { title: 'Core', description1: 'for complex', description2: 'visualization' },
+                    { title: 'UI', description1: 'designed for', description2: 'accessibility' },
+                    { title: 'SDK', description1: '100% free for', description2: 'self-hosting' }
+                ],
+                button: {
+                    title: 'Make the first step',
+                    link: '/'
+                }
             })}
         />
     </main>

@@ -1,0 +1,418 @@
+---
+import Layout from '../layouts/Layout.astro'
+import tailyUI from 'taily-ui'
+
+const month = new Date().getMonth()
+const day = new Date().getDate()
+const year = new Date().getFullYear()
+const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+]
+function getDate(date: Date) {
+    return [date.getDate().toString(), monthNames[date.getMonth()], date.getFullYear().toString()]
+}
+export async function getStaticPaths() {
+    return [undefined, 'default', 'primary', 'secondary', 'success', 'warning', 'error', 'ghost'].map((theme) => ({
+        params: { theme }
+    }))
+}
+const { theme } = Astro.params
+const colorTheme =
+    (theme as 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'ghost') ?? 'primary'
+---
+
+<Layout
+    title="Welcome to Scientry"
+    description="Self-hosted, all-in-one Data Management & Visualization solution for scientific researchers."
+    color={colorTheme}
+>
+    <main class="select-none overflow-hidden">
+        <fragment
+            set:html={tailyUI.OpenSourcePromo({
+                logo: 'M11.996 14.23zm10.69 2.648c-0-1.346-.96-3.107-2.622-4.888 1.653-1.78 2.602-3.542 2.602-4.887-0-.41-.093-.783-.278-1.106-.793-1.375-3.264-1.683-6.365-.973C15.083 1.98 13.58 0 11.996 0c-1.59 0-3.097 1.99-4.03 5.043-3.113-.704-5.588-.39-6.38.988-.187.32-.275.69-.275 1.102 0 1.345.96 3.107 2.624 4.888-1.654 1.78-2.603 3.542-2.603 4.887 0 .41.09.783.275 1.106.792 1.374 3.263 1.683 6.365.973C8.904 22.02 10.41 24 11.996 24c1.59-0 3.097-1.99 4.032-5.043 3.11.704 5.587.39 6.38-.988.184-.318.277-.688.278-1.092zm-1.09-.005h-.006c0 .225-.044.406-.127.558-.382.666-1.835.955-3.704.73-.46-.054-.945-.142-1.44-.25.236-.96.417-2.006.534-3.107.905-.66 1.727-1.345 2.447-2.035 1.48 1.592 2.292 3.087 2.295 4.105zm-.02-9.77c0 1.012-.808 2.514-2.28 4.11-.72-.686-1.537-1.37-2.442-2.02-.117-1.107-.298-2.154-.538-3.113.49-.112.964-.195 1.42-.254 1.868-.23 3.32.054 3.707.714.09.19.127.4.132.563zm-3.05 4.882c-.468.455-.992.91-1.564 1.36.02-.44.034-.89.034-1.345-0-.46-.01-.915-.034-1.36.572.44 1.096.895 1.565 1.345zM15.9 12c0 .74-.034 1.477-.093 2.202-.582.406-1.203.802-1.86 1.183-.64.372-1.29.71-1.946 1.018-.655-.308-1.31-.646-1.95-1.013-.66-.38-1.288-.773-1.87-1.18-.063-.728-.098-1.466-.098-2.21-0-.74.035-1.477.093-2.202.582-.406 1.204-.802 1.86-1.183.64-.372 1.29-.71 1.946-1.018.657.303 1.313.646 1.954 1.013.66.38 1.286.773 1.868 1.18.064.728.098 1.466.098 2.21zm-.254-3.635c-.377-.24-.763-.48-1.16-.704-.39-.225-.782-.435-1.174-.635.656-.265 1.31-.49 1.947-.676.15.64.283 1.315.386 2.015zm0 7.26c-.103.695-.23 1.365-.387 2.006-.632-.18-1.282-.405-1.933-.66.39-.2.783-.41 1.174-.64.392-.225.774-.465 1.146-.705zm-.675 3.063c-.15.484-.317.944-.498 1.375-.74 1.732-1.708 2.852-2.476 2.852-.768-.005-1.74-1.125-2.475-2.857-.18-.42-.342-.88-.493-1.355.958-.28 1.956-.646 2.98-1.1 1.017.45 2.01.81 2.964 1.085zm-.004-13.395c-.96.278-1.957.645-2.98 1.1-1.017-.45-2.01-.812-2.964-1.086.15-.484.318-.944.5-1.37.737-1.732 1.706-2.852 2.474-2.852.768-0 1.742 1.12 2.476 2.852.18.42.342.88.494 1.356zm-4.28 11.678c-.657.265-1.312.49-1.948.676-.157-.64-.29-1.316-.39-2.016.375.24.762.48 1.158.705.39.225.788.435 1.18.636zm-.02-9.945c-.392.2-.783.41-1.175.64-.39.23-.772.465-1.143.705.102-.695.23-1.365.386-2.006.63.18 1.282.406 1.933.66zM7.68 17.92c-.493.112-.968.2-1.423.254-1.868.23-3.32-.054-3.708-.714-.09-.147-.128-.338-.128-.563-0-1.012.807-2.514 2.28-4.11.72.686 1.536 1.37 2.44 2.02.118 1.107.3 2.154.54 3.113zm-.01-11.83c-.234.96-.415 2.006-.532 3.107-.905.66-1.727 1.345-2.446 2.035-1.483-1.595-2.295-3.092-2.295-4.11.005-.22.05-.406.132-.553.38-.666 1.834-.955 3.703-.73.46.054.944.142 1.438.25zm-.64 4.56c-.02.44-.034.89-.034 1.345 0 .46.01.915.034 1.36-.572-.44-1.095-.895-1.565-1.345.47-.455.993-.91 1.565-1.36z',
+                title: 'Scientry',
+                color: colorTheme,
+                text: [
+                    { type: 'default', value: 'Build' },
+                    { type: 'primary', value: 'beautiful' },
+                    {
+                        type: 'default',
+                        value: 'dashboards with compact, easy to use and fully customizable CMS for'
+                    },
+                    { type: 'secondary', value: 'Data Management' }
+                ],
+                description:
+                    'Self-hosted, all-in-one Data Management & Visualization solution for scientific researchers.',
+                button: {
+                    title: 'Research more',
+                    link: '#kpi'
+                },
+                github: 'https://github.com/nikdelvin/scientry'
+            })}
+        />
+        <fragment
+            id="kpi"
+            set:html={tailyUI.KPICards({
+                title: `Under the hood`,
+                color: colorTheme,
+                cards: [
+                    { title: 'Fast', description1: 'relative', description2: 'database' },
+                    { title: 'Core', description1: 'for complex', description2: 'visualization' },
+                    { title: 'UI', description1: 'designed for', description2: 'accessibility' },
+                    { title: 'SDK', description1: '100% free for', description2: 'self-hosting' }
+                ],
+                button: {
+                    title: 'Make the first step',
+                    link: '/'
+                }
+            })}
+        />
+        <fragment
+            id="features"
+            set:html={tailyUI.FeatureCards({
+                title: 'Self-hosted future',
+                color: colorTheme,
+                reverse: false,
+                featureTitle: 'Sci-Fi CMS',
+                featureDescription: [
+                    { type: 'default', value: 'For any of your' },
+                    { type: 'primary', value: 'research' },
+                    { type: 'default', value: 'and data' },
+                    { type: 'primary', value: 'analysis' }
+                ],
+                featureOptions: [
+                    'Powered with fast relational SQLite database and data visualization core based on D3.js library',
+                    'Content type customization to generate database structure and apply it immediately to your data. Included flexible user permissions management',
+                    'Free open-source SDK for self-hosting on your personal computer, VPS or dedicated server'
+                ],
+                button: {
+                    title: 'Learn more',
+                    link: '#features_2'
+                }
+            })}
+        />
+        <fragment
+            id="features_2"
+            set:html={tailyUI.FeatureCards({
+                title: 'Build in weekend',
+                color: colorTheme,
+                reverse: true,
+                featureTitle: 'Scale in day',
+                featureDescription: [
+                    { type: 'default', value: 'To achieve' },
+                    { type: 'secondary', value: 'impossible' },
+                    { type: 'default', value: 'goals in world of' },
+                    { type: 'secondary', value: 'science' }
+                ],
+                featureOptions: [
+                    'Real-time database with user authentication, custom edge functions, data RESTful APIs and file storage',
+                    'Connect your favorite ML models, prepare data, train, test, showcase the metrics, loss, learning rate, accuracy & comparison graphs. Visualize everything',
+                    'In-build SDK for CRUD operations with your data, web socket connections, pub/sub services & more'
+                ],
+                button: {
+                    title: 'Learn more',
+                    link: '#stages'
+                }
+            })}
+        />
+        <fragment
+            id="stages"
+            set:html={tailyUI.Jobs({
+                title: 'Project roadmap',
+                color: colorTheme,
+                jobs: [
+                    {
+                        from: getDate(new Date()),
+                        to: getDate(new Date(Date.now() + 3 * 30 * 24 * 60 * 60 * 1000)),
+                        title: 'Phase I: Database models builder',
+                        description: [
+                            { type: 'default', value: 'Powerful' },   
+                            { type: 'primary', value: 'constructor' },
+                            { type: 'default', value: 'to create' },
+                            { type: 'primary', value: 'models' },
+                            { type: 'default', value: 'easily' }
+                        ],
+                        role: [
+                            '100% portable and dedicated SQLite database for every your Scientry project. Bring your existing database or migrate at any time',
+                            'Easy-to-use data schemas builder with more than 15 different data types, like numbers, strings, arrays, files, tensors, and many more',
+                            'Data-change listeners over web sockets to make any database update reliable. Pub/sub service to monitor DB changes in millisec'
+                        ]
+                    },
+                    {
+                        from: getDate(new Date(Date.now() + (3 * 30 + 1) * 24 * 60 * 60 * 1000)),
+                        to: getDate(new Date(Date.now() + (6 * 30 + 1) * 24 * 60 * 60 * 1000)),
+                        title: 'Phase II: Entries tables & APIs',
+                        description: [
+                            { type: 'default', value: 'Auto generated' },     
+                            { type: 'primary', value: 'APIs' },
+                            { type: 'default', value: 'directly from' },
+                            { type: 'primary', value: 'database' }
+                        ],
+                        role: [
+                            'Simplified no-code tool for adding, editing, and updating database entries, and managing collections and relations between them',
+                            'Dashboard for adding tables, columns, and rows right into the DB. Visual interface for building connections throughout your data',
+                            'RESTful APIs generated from your database and designed to get you building as fast as possible, without writing a single line of code'
+                        ]
+                    },
+                    {
+                        from: getDate(new Date(Date.now() + (6 * 30 + 2) * 24 * 60 * 60 * 1000)),
+                        to: getDate(new Date(Date.now() + (9 * 30 + 2) * 24 * 60 * 60 * 1000)),
+                        title: 'Phase III: Authorization & storage',
+                        description: [
+                            { type: 'default', value: 'Make' },    
+                            { type: 'primary', value: 'user' },
+                            { type: 'default', value: 'sign ups, logins and files' },
+                            { type: 'primary', value: 'secure' },
+                        ],
+                        role: [
+                            'Incredibly simple auth without a single external authentication service. Built-in authentication, authorization & user management',
+                            'Social providers integration like Google, Apple ID, Facebook, Twitter, GitHub, Discord, and many more to make user login even faster',
+                            'Open-source S3 compatible object store with unlimited scalability for any file type secured by custom policies and permissions'
+                        ]
+                    },
+                    {
+                        from: getDate(new Date(Date.now() + (9 * 30 + 3) * 24 * 60 * 60 * 1000)),
+                        to: getDate(new Date(Date.now() + (12 * 30 + 3) * 24 * 60 * 60 * 1000)),
+                        title: 'Phase IV: Machine learning & metrics',
+                        description: [
+                            { type: 'default', value: 'Build-in' },
+                            { type: 'primary', value: 'toolkit' },
+                            { type: 'default', value: 'to integrate' },
+                            { type: 'primary', value: 'AI' },
+                            { type: 'default', value: 'applications' }
+                        ],
+                        role: [
+                            'SQLite Vector Similarity Search extension to store, query, and index your vector embeddings at scale in a SQLite database instance',
+                            'AI toolkit for easy connection & integration with LLM or embedding API, including OpenAI, Hugging Face, SageMaker, and more',
+                            'D3.js visualization core for charts, metrics, logs, traces, profiles, and other pre-built solutions like ready-to-use dashboards, KPIs, alerts'
+                        ]
+                    }
+                ]
+            })}
+        />
+        <fragment
+            id="footer"
+            set:html={tailyUI.Footer({
+                color: colorTheme,
+                blocks: [
+                    {
+                        title: 'About creator',
+                        text: [
+                            { type: 'default', value: `Hi, I'm` },
+                            { type: 'primary', value: 'Nikita Stadnik' },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'default', value: `I'm a passionate and ambitious` },
+                            { type: 'primary', value: 'Fullstack Web Developer' },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'default', value: 'My love is' },
+                            { type: 'primary', value: 'developing' },
+                            { type: 'default', value: 'cross-platform applications from zero to production' },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'default', value: `I've mastered` },
+                            { type: 'primary', value: 'T-shaped skills' },
+                            { type: 'default', value: `that help me work solo on my own big projects` }
+                        ]
+                    },
+                    {
+                        title: 'Contacts',
+                        text: [
+                            { type: 'default', value: 'Email:' },
+                            {
+                                type: 'primary',
+                                value: 'erter.live@gmail.com',
+                                link: 'mailto:erter.live@gmail.com',
+                                newPage: true
+                            },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'default', value: 'Github:' },
+                            {
+                                type: 'primary',
+                                value: '@nikdelvin',
+                                link: 'https://github.com/nikdelvin',
+                                newPage: true
+                            },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'default', value: 'DEV Blog:' },
+                            { type: 'primary', value: '@nikdelvin', link: 'https://dev.to/nikdelvin', newPage: true },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'default', value: 'Behance:' },
+                            {
+                                type: 'primary',
+                                value: '@nikdelvin',
+                                link: 'https://www.behance.net/nikdelvin',
+                                newPage: true
+                            },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'default', value: 'Telegram:' },
+                            { type: 'primary', value: '@nikdelvin', link: 'https://t.me/nikdelvin', newPage: true },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'default', value: 'LinkedIn:' },
+                            {
+                                type: 'primary',
+                                value: '@nikdelvin',
+                                link: 'https://www.linkedin.com/in/nikdelvin',
+                                newPage: true
+                            }
+                        ]
+                    },
+                    {
+                        title: 'Projects',
+                        text: [
+                            { type: 'primary', value: 'TailyUI', link: 'https://tailyui.nikdelvin.dev', newPage: true },
+                            {
+                                type: 'default',
+                                value: '<br/>Modern UI Library 100% built and animated with pure Tailwind CSS'
+                            },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'primary', value: 'Brodly', link: 'https://brodly.nikdelvin.dev', newPage: true },
+                            {
+                                type: 'default',
+                                value: '<br/>High-secure and fully anonymous live streaming platform for everyone'
+                            },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'primary', value: 'Neuroly', link: 'https://neuroly.nikdelvin.dev', newPage: true },
+                            { type: 'default', value: '<br/>STT and voice synthesis AI chatbot' }
+                        ]
+                    },
+                    {
+                        title: 'Coming soon',
+                        text: [
+                            { type: 'primary', value: 'Scripty', link: 'https://scripty.nikdelvin.dev', newPage: true },
+                            {
+                                type: 'default',
+                                value: '<br/>Practice-oriented educational platform to learn JavaScript & WebDev'
+                            },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'primary', value: 'Feelicy', link: 'https://feelicy.nikdelvin.dev', newPage: true },
+                            {
+                                type: 'default',
+                                value: '<br/>Mind mapping and goal planning service in game format of Garden Sim'
+                            },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            {
+                                type: 'primary',
+                                value: 'Scientry',
+                                link: 'https://scientry.nikdelvin.dev',
+                                newPage: true
+                            },
+                            { type: 'default', value: '<br/>Data management & visualization tool' }
+                        ]
+                    },
+                    {
+                        title: 'Experience',
+                        text: [
+                            {
+                                type: 'primary',
+                                value: `17.05.22 - ${String(day).padStart(2, '0')}.${String(month + 1).padStart(2, '0')}.${String(year).slice(2)}:`
+                            },
+                            { type: 'default', value: 'BSO Real Estate Management.' },
+                            { type: 'primary', value: 'Role:' },
+                            { type: 'default', value: 'Team leader / DevOps / Backend developer.' },
+                            { type: 'primary', value: 'Product:' },
+                            { type: 'default', value: 'Cross-platform mobile app & internal ERP system.' },
+                            { type: 'primary', value: 'Info', link: 'https://bso.ae', newPage: true },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'primary', value: '19.01.21 - 11.05.22:' },
+                            { type: 'default', value: 'WhatCRM by LifeTelecom.' },
+                            { type: 'primary', value: 'Role:' },
+                            { type: 'default', value: 'Frontend Next.JS / React web developer.' },
+                            { type: 'primary', value: 'Product:' },
+                            { type: 'default', value: 'Custom WhatsApp Web client as an integration for CRMs.' },
+                            { type: 'primary', value: 'Info', link: 'https://whatcrm.net/en', newPage: true },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'primary', value: '25.05.19 - 13.01.21:' },
+                            { type: 'default', value: 'Unistroy Construction.' },
+                            { type: 'primary', value: 'Role:' },
+                            { type: 'default', value: 'Fullstack React / Python web developer.' },
+                            { type: 'primary', value: 'Product:' },
+                            { type: 'default', value: 'Big-data service for analyzing counterparties affiliations.' },
+                            { type: 'primary', value: 'Info', link: 'https://github.com/nikdelvin', newPage: true },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'default', value: 'Total time on development "battlefield":' },
+                            {
+                                type: 'primary',
+                                value: `${Math.floor((Date.now() - Date.parse('25 May 2019 00:00:00 GMT')) / (1000 * 60 * 60 * 24) / 365)}`
+                            },
+                            { type: 'default', value: 'years and' },
+                            {
+                                type: 'primary',
+                                value: `${Math.floor(((Date.now() - Date.parse('25 May 2019 00:00:00 GMT')) / (1000 * 60 * 60 * 24)) % 365)}`
+                            },
+                            { type: 'default', value: 'days' }
+                        ]
+                    },
+                    {
+                        title: 'Skills',
+                        text: [
+                            { type: 'primary', value: 'Languages:' },
+                            { type: 'default', value: 'JavaScript, TypeScript, HTML 5, CSS 3, Python, Java, Swift' },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'primary', value: 'Frameworks:' },
+                            {
+                                type: 'default',
+                                value: 'React, Solid, Astro, Next, Svelte, Vue, Nuxt, Nest, Electron, Flask'
+                            },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'primary', value: 'Libraries:' },
+                            {
+                                type: 'default',
+                                value: 'Bootstrap, Tailwind, Formik, Redux, Recoil, MUI, Framer, Three JS'
+                            },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'default', value: 'And more other deeply learned' },
+                            { type: 'primary', value: 'tools', link: '#skills' }
+                        ]
+                    },
+                    {
+                        title: 'Articles',
+                        text: [
+                            { type: 'primary', value: '04.08.20:' },
+                            {
+                                type: 'default',
+                                value: 'Modified genetic algorithm as a new approach for solving the problem of 3d packaging.'
+                            },
+                            {
+                                type: 'primary',
+                                value: 'Read',
+                                link: 'https://ceur-ws.org/Vol-2667/paper21.pdf',
+                                newPage: true
+                            },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'primary', value: '24.12.21:' },
+                            {
+                                type: 'default',
+                                value: 'Development of an information system for organizing the work of a production workshop.'
+                            },
+                            {
+                                type: 'primary',
+                                value: 'Read',
+                                link: 'https://ieeexplore.ieee.org/document/9649154',
+                                newPage: true
+                            },
+                            { type: 'default', value: '<div style="padding:8px;"></div>' },
+                            { type: 'primary', value: '03.11.23:' },
+                            { type: 'default', value: 'Comprehensive simulation model of city transport network.' },
+                            {
+                                type: 'primary',
+                                value: 'Read',
+                                link: 'https://ieeexplore.ieee.org/document/10303830',
+                                newPage: true
+                            }
+                        ]
+                    }
+                ]
+            })}
+        />
+    </main>
+</Layout>
